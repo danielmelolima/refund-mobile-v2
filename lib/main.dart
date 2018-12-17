@@ -16,35 +16,10 @@ AppBar getAppBar(text) =>
     ],
   );
 
-Drawer getMenu() => 
+Drawer getMenu(BuildContext context) => 
   Drawer(
     child: ListView(
-      children: <Widget> [
-        DrawerHeader(
-          child: Center(child: new Container(
-            decoration: const BoxDecoration(
-              image: const DecorationImage(
-                fit: BoxFit.fill,
-                image: const AssetImage("assets/img/osf-logo.jpg"),
-              ),
-            ),
-          )),
-        ),
-        ListTile(
-          title:  Text('Início'),
-          onTap: () {},
-        ),
-        Divider(),
-        ListTile(
-          title: Text('Novo Registro'),
-          onTap: () {},
-        ),
-        Divider(),
-        ListTile(
-          title:  Text('Configurações'),
-          onTap: () {},
-        ),
-      ],
+      children: getMenuItens(context)
     )
   );
 
@@ -55,7 +30,7 @@ class HomePage extends StatelessWidget {
       title: 'Home',
       home: Scaffold(
           appBar: getAppBar('home'),
-          drawer: getMenu(),
+          drawer: getMenu(context),
           body: RefundCard()),
     );
   }
@@ -68,7 +43,56 @@ class FormPage extends StatelessWidget {
       title: 'Form',
       home: Scaffold(
         appBar: getAppBar('Form'),
+        drawer: getMenu(context),
         body: RefundForm()),
     );
   }
 }
+
+const MENU_ITENS = [
+  {
+    'text': 'Início',
+    'page': HomePage
+  },
+  {
+    'text': 'Novo Registro' 
+  },
+  {
+    'text': 'Configurações' 
+  }
+];
+
+List<Widget> getMenuItens(BuildContext context) {
+  List<Widget> menuItens = new List<Widget>();
+  
+  //header
+  menuItens.add(DrawerHeader(
+    child: Center(child: new Container(
+      decoration: const BoxDecoration(
+        image: const DecorationImage(
+          fit: BoxFit.fill,
+          image: const AssetImage("assets/img/osf-logo.png"),
+        ),
+      ),
+    )),
+  ));
+  
+  //itens
+  MENU_ITENS.forEach((item) =>
+    menuItens.add(ListTile(
+      title: Text(item['text']),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) { var f = item['page']; f(); }),
+        );
+      }
+    ))
+  );
+
+  //version
+  menuItens.add(Center(child: Text('Versão: 2.0.0')));
+
+  return menuItens;
+}
+
