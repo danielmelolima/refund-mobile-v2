@@ -21,20 +21,27 @@ Drawer getMenu() =>
     child: ListView(
       children: <Widget> [
         DrawerHeader(
-          child: Center(child: Image.asset('assets/img/osf-logo.jpg')),
+          child: Center(child: new Container(
+            decoration: const BoxDecoration(
+              image: const DecorationImage(
+                fit: BoxFit.fill,
+                image: const AssetImage("assets/img/osf-logo.jpg"),
+              ),
+            ),
+          )),
         ),
         ListTile(
-          title:  Text('First Menu Item'),
+          title:  Text('Início'),
           onTap: () {},
         ),
         Divider(),
         ListTile(
-          title: Text('Second Menu Item'),
+          title: Text('Novo Registro'),
           onTap: () {},
         ),
         Divider(),
         ListTile(
-          title:  Text('About'),
+          title:  Text('Configurações'),
           onTap: () {},
         ),
       ],
